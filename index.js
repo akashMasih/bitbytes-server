@@ -80,4 +80,6 @@ io.on('connection', (socket) => {
 server.listen(port, () => console.log(`listing on localhost:${port}`))
 
 
+// Export the Express API
+module.exports = app;
 
