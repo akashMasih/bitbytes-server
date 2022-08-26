@@ -1,24 +1,30 @@
 const mongoose = require('mongoose')
 
 const UserSchema = mongoose.Schema({
-    name: {
+    fullName: {
         type: String,
-        required: 'Name is required!'
+        required: 'fullName is required!'
     },
     email: {
         type: String,
         required: 'Email is required!'
     },
     mobile_number: {
-        type: Number,
+        type: String,
+        default: ''
     },
     password: {
         type: String
     },
+    isPictureSet: {
+        type: Boolean,
+        default: false
+    },
     picture: {
         type: String,
+        default: ''
     },
-    timestamp: {
+    registeredOn: {
         type: Date,
         default: new Date()
     },

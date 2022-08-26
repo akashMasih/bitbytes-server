@@ -6,11 +6,10 @@ const dotenv = require('dotenv').config()
 const jwt = require('jwt-then')
 const { OAuth2Client } = require('google-auth-library')
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
+const { emailRegex } = require('../utils')
 
 exports.register = async (req, res) => {
-    const { name, email, password, mobile_number, } = req.body
-
-    const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    const { fullName, email, password, mobile_number, } = req.body
 
     if (!emailRegex.test(email)) {
         return res.status(400).json({ error: "Email is not valid !" })
@@ -25,7 +24,7 @@ exports.register = async (req, res) => {
 
     const salt = await bcrypt.genSalt(10);
     const user = new User({
-        name,
+        fullName,
         email,
         mobile_number,
         password: await bcrypt.hash(password, salt)
@@ -34,8 +33,16 @@ exports.register = async (req, res) => {
     await user.save()
         .then(response => {
             res.status(201).json({
-                message: `User ${name} register successfully!`,
-                id: response._id
+                message: `User ${fullName} register successfully!`,
+                user: {
+                    id: response._id,
+                    fullName: response.fullName,
+                    email: response.email,
+                    picture: response.picture,
+                    isPictureSet: response.isPictureSet,
+                    mobile_number: response.mobile_number
+                }
+
             })
         })
         .catch(err => {
@@ -58,9 +65,9 @@ exports.googleAuth = async (req, res) => {
         audience: process.env.GOOGLE_CLIENT_ID
     });
     console.log(ticket.getPayload())
-    const { name, email, picture } = ticket.getPayload();
+    const { fullName, email, picture } = ticket.getPayload();
     const user = new User({
-        name,
+        fullName,
         email,
         picture
     })
@@ -72,7 +79,7 @@ exports.googleAuth = async (req, res) => {
             .then(response => {
                 res.status(200).json({
                     user: {
-                        name,
+                        fullName,
                         email,
                     },
                     message: "User logedIn successfully !",
@@ -89,7 +96,7 @@ exports.googleAuth = async (req, res) => {
     else {
         res.status(200).json({
             user: {
-                name,
+                fullName,
                 email,
             },
             message: "User logedIn successfully !",
@@ -102,6 +109,15 @@ exports.googleAuth = async (req, res) => {
 
 exports.login = async (req, res) => {
     const { email, password } = req.body
+    if (!emailRegex.test(email)) {
+        return res.status(400).json({ error: "Email is not valid !" })
+    }
+    if (!password) {
+        return res.status(400).json({ error: "Password should not be empty" })
+    }
+    if (password && password.length < 6) {
+        return res.status(400).json({ error: "password must contail atleast 6 characters long" })
+    }
     const findEmail = await User.findOne({ email })
     if (!findEmail) {
         return res.status(400).json({ error: 'email did not match' })
@@ -116,8 +132,13 @@ exports.login = async (req, res) => {
 
     res.json({
         user: {
-            name: findEmail.name,
-            email: findEmail.email
+            id: findEmail._id,
+            fullName: findEmail.fullName,
+            email: findEmail.email,
+            picture: findEmail.picture,
+            isPictureSet: findEmail.isPictureSet,
+            mobile_number: findEmail.mobile_number
+
         },
         message: "User logedIn successfully !", token,
     })
@@ -126,6 +147,27 @@ exports.login = async (req, res) => {
 }
 
 exports.getAllUser = async (req, res) => {
-    const user = await User.find().sort({ created_at: -1 }).select({ "name": 1, "email": 1, "picture": 1, "is_active": 1, "_id": 1 })
+    const user = await User.find().sort({ created_at: -1 }).select({ "fullName": 1, "email": 1, "picture": 1, "is_active": 1, "_id": 1 })
     res.json(user)
 }
+
+module.exports.setProfile = async (req, res, next) => {
+    try {
+        const _id = req.params.id;
+        const picture = req.body.image;
+        const userData = await User.findOneAndUpdate(
+            _id,
+            {
+                isPictureSet: true,
+                picture,
+            },
+            { new: true }
+        );
+        return res.json({
+            isSet: userData.isPictureSet,
+            image: userData.picture,
+        });
+    } catch (ex) {
+        next(ex);
+    }
+};
