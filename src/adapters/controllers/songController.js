@@ -1,6 +1,6 @@
-import { createSongUseCase } from "../../useCases/song/createSongUseCase";
-import { uploadSongUseCase } from "../../useCases/song/uploadSongUseCase";
-import { response } from "../services/ResponseService";
+import { createSongUseCase } from "../../useCases/song/createSongUseCase.js";
+import { uploadSongUseCase } from "../../useCases/song/uploadSongUseCase.js";
+import { response } from "../services/ResponseService.js";
 
 
 async function uploadSong(req, res) {

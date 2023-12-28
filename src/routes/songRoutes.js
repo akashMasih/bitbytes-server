@@ -1,6 +1,6 @@
 
 import express from 'express'
-import { songController } from '../adapters/controllers/songControler'
+import { songController } from '../adapters/controllers/songController.js'
 
 import multer from 'multer';
 const storage = multer.memoryStorage(); // In-memory storage for demonstration purposes

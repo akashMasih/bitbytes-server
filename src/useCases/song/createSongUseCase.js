@@ -1,4 +1,4 @@
-import { songRepository } from '../../adapters/repositories/songRepository'
+import { songRepository } from '../../adapters/repositories/songRepository.js'
 
 async function create(song, res) {
     return await songRepository.create(song)

@@ -1,5 +1,5 @@
-import Song from "../../models/Song";
-import { response } from "../services/ResponseService";
+import Song from "../../models/Song.js";
+import { response } from "../services/ResponseService.js";
 
 async function create(song) {
     return await Song.create(song)

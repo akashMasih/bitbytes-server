@@ -4,10 +4,9 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import { Server, Socket } from 'socket.io';
 import { createServer } from 'node:http';
-import { connectDb, runServer } from './config';
-import { login } from "./adapters/controllers/authController";
-import loginRoutes from "./routes/loginRoutes";
-import songRoutes from "./routes/songRoutes";
+import { connectDb, runServer } from './src/config/index.js';
+import loginRoutes from "./src/routes/loginRoutes.js";
+import songRoutes from "./src/routes/songRoutes.js";
 
 
 

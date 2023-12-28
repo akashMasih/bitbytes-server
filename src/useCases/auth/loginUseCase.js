@@ -1,9 +1,9 @@
 // src/useCases/auth/LoginUseCase.ts
-import { create, findByMobileNumber, update } from '../../adapters/repositories/UserRepository';
-import { response } from '../../adapters/services/ResponseService';
-import { sendOtp } from '../../adapters/services/TwilioService';
-import { generateOtp } from '../../utils';
-const jwt = require('jwt-then')
+import { create, findByMobileNumber, update } from '../../adapters/repositories/UserRepository.js';
+import { response } from '../../adapters/services/ResponseService.js';
+import { sendOtp } from '../../adapters/services/TwilioService.js';
+import { generateOtp } from '../../utils/index.js';
+import jwt from 'jwt-then'
 
 
 async function loginWithMobile(mobileNumber, fullName) {

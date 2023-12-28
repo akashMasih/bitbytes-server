@@ -1,6 +1,6 @@
-import { songRepository } from "../../adapters/repositories/songRepository";
-import { response } from "../../adapters/services/ResponseService"
-import s3Config from "../../config/s3Config";
+import { songRepository } from "../../adapters/repositories/songRepository.js";
+import { response } from "../../adapters/services/ResponseService.js"
+import s3Config from "../../config/s3Config.js";
 
 
 const audioPath = 'audio/'; // Include a trailing slash to denote a folder

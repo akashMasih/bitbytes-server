@@ -1,5 +1,5 @@
 // src/adapters/repositories/UserRepository.ts
-import User from '../../models/User';
+import User from '../../models/User.js';
 
 
 export async function findByMobileNumber(mobileNumber) {

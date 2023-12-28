@@ -1,6 +1,6 @@
 // src/routes/chatRoutes.ts
 import express from 'express';
-import { authController } from '../adapters/controllers/authController'
+import { authController } from '../adapters/controllers/authController.js'
 
 const loginRoutes = express.Router();
 

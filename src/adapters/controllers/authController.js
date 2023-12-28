@@ -1,4 +1,4 @@
-import { loginUseCase } from "../../useCases/auth/LoginUseCase";
+import { loginUseCase } from "../../useCases/auth/LoginUseCase.js";
 
 async function loginWithMobile(req, res) {
     console.log(req.body)
