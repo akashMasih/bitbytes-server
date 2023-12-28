@@ -7,8 +7,8 @@ const Socket = require('socket.io').Socket;
 const createServer = require('node:http').createServer;
 const connectDb = require('./src/config/index.js').connectDb;
 const runServer = require('./src/config/index.js').runServer;
-const loginRoutes = require("./src/routes/loginRoutes.js");
-const songRoutes = require("./src/routes/songRoutes.js");
+// const loginRoutes = require("./src/routes/loginRoutes.js");
+// const songRoutes = require("./src/routes/songRoutes.js");
 
 
 
@@ -25,13 +25,13 @@ exports.io = new Server(server, {
 
 
 
-// app.use('/', (req, res) => res.send("Your app is up"))
+app.use('/', (req, res) => res.send("Your app is up"))
 
 // console.log(loginRoutes)
 //ROUTES
 // login Routes
-app.use('/api', loginRoutes);
-app.use('/api', songRoutes);
+// app.use('/api', loginRoutes);
+// app.use('/api', songRoutes);
 
 
 
