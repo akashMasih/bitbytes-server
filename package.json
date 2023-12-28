@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "nodemon app.js",
     "build": "node app.js",
-    "debug": "nodemon --exec babel-node app.js"
+    "debug": "nodemon app.js"
   },
   "author": "Akash",
   "license": "ISC",
