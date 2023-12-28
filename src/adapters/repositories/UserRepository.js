@@ -1,15 +1,22 @@
 // src/adapters/repositories/UserRepository.ts
-import User from '../../models/User.js';
+const User = require('../../models/User.js');
 
-
-export async function findByMobileNumber(mobileNumber) {
+async function findByMobileNumber(mobileNumber) {
     return User.findOne({ mobileNumber }).exec();
 }
 
-export async function create(user) {
+async function create(user) {
     await User.create(user);
 }
-
-export async function update(user) {
+async function update(user) {
     await User.findOneAndUpdate({ mobileNumber: user.mobileNumber }, user).exec();
 }
+
+
+const userRepository = {
+    findByMobileNumber,
+    create,
+    update
+}
+
+module.exports = userRepository

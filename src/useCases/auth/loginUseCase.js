@@ -1,23 +1,23 @@
 // src/useCases/auth/LoginUseCase.ts
-import { create, findByMobileNumber, update } from '../../adapters/repositories/UserRepository.js';
-import { response } from '../../adapters/services/ResponseService.js';
-import { sendOtp } from '../../adapters/services/TwilioService.js';
-import { generateOtp } from '../../utils/index.js';
-import jwt from 'jwt-then'
+const userRepository = require('../../adapters/repositories/UserRepository.js');
+const response = require('../../adapters/services/ResponseService.js');
+const sendOtp = require('../../adapters/services/TwilioService.js');
+const generateOtp = require('../../utils/index.js');
+const jwt = require('jwt-then');
 
 
 async function loginWithMobile(mobileNumber, fullName) {
-    const user = await findByMobileNumber(mobileNumber);
+    const user = await userRepository.findByMobileNumber(mobileNumber);
     let otp;
 
     if (!user) {
         otp = generateOtp();
-        await create({ mobileNumber, OTP: otp, fullName });
+        await userRepository.create({ mobileNumber, OTP: otp, fullName });
     }
     else {
         otp = generateOtp();
         user.OTP = otp;
-        await update(user);
+        await userRepository.update(user);
     }
 
     // Send the OTP via SMS
@@ -28,7 +28,7 @@ async function loginWithMobile(mobileNumber, fullName) {
 async function verifyOtp(mobileNumber, OTP, res) {
 
     try {
-        const user = await findByMobileNumber(mobileNumber);
+        const user = await userRepository.findByMobileNumber(mobileNumber);
 
         if (!user) {
             response.error(res, "User not found")
@@ -38,7 +38,7 @@ async function verifyOtp(mobileNumber, OTP, res) {
                 const token = await jwt.sign({ id: user?._id }, process.env.JWT_SECRET)
                 user.token = token
                 user.OTP = "",
-                    await update(user)
+                    await userRepository.update(user)
                 response.success(res, "OTP verified Successfully", user)
             }
             else {
@@ -52,10 +52,11 @@ async function verifyOtp(mobileNumber, OTP, res) {
     }
 }
 
-
-export const loginUseCase = {
+const loginUseCase = {
     loginWithMobile, verifyOtp
 }
+
+module.exports = loginUseCase
 
 
 

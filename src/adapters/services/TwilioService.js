@@ -1,10 +1,9 @@
 // src/adapters/services/TwilioService.ts
-import pkg from 'twilio';
-const { Twilio } = pkg;
+const Twilio = require('twilio');
 
 
 
-export async function sendOtp(mobileNumber, otp) {
+async function sendOtp(mobileNumber, otp) {
 
     const client = new Twilio(
         process.env.TWILIO_ACCOUNT_SID,
@@ -22,4 +21,6 @@ export async function sendOtp(mobileNumber, otp) {
         throw error;
     }
 }
+
+module.exports = sendOtp
 

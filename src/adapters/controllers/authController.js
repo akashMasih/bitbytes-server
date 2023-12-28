@@ -1,4 +1,4 @@
-import { loginUseCase } from "../../useCases/auth/LoginUseCase.js";
+const loginUseCase = require("../../useCases/auth/LoginUseCase.js");
 
 async function loginWithMobile(req, res) {
     console.log(req.body)
@@ -25,8 +25,9 @@ async function verifyOTP(req, res) {
     }
 }
 
-
-export const authController = {
+const authController = {
     loginWithMobile,
     verifyOTP
 }
+
+module.exports = authController

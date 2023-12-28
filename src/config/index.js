@@ -1,8 +1,8 @@
-import mongoose from "mongoose"
+const mongoose = require("mongoose");
 
-export const PORT = 8080
+const PORT = 8080
 
-export const connectDb = () => {
+exports.connectDb = () => {
     //db config
     try {
         process.env.MONGO_URI && mongoose.connect(process.env.MONGO_URI).then(res => {
@@ -15,7 +15,7 @@ export const connectDb = () => {
 }
 
 // Run Server
-export const runServer = (server) => {
+exports.runServer = (server) => {
     server.listen(PORT, () => {
         console.log(`Your server is running on: ${PORT}`)
     })

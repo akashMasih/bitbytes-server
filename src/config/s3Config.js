@@ -1,6 +1,6 @@
-import AWS from 'aws-sdk';
+const AWS = require('aws-sdk');
 
-export default async function s3Config() {
+async function s3Config() {
     try {
         const s3 = new AWS.S3({
             credentials: {
@@ -17,3 +17,5 @@ export default async function s3Config() {
 
 
 }
+
+module.exports = s3Config

@@ -1,5 +1,5 @@
-import Song from "../../models/Song.js";
-import { response } from "../services/ResponseService.js";
+const Song = require("../../models/Song.js");
+const response = require("../services/ResponseService.js");
 
 async function create(song) {
     return await Song.create(song)
@@ -17,8 +17,10 @@ async function getAll(songId, song) {
     await Song.getAll({ _id: songId }, song)
 }
 
-export const songRepository = {
+const songRepository = {
     create,
     update,
     getById
 }
+
+module.exports = songRepository

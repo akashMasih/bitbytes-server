@@ -1,6 +1,6 @@
-import { createSongUseCase } from "../../useCases/song/createSongUseCase.js";
-import { uploadSongUseCase } from "../../useCases/song/uploadSongUseCase.js";
-import { response } from "../services/ResponseService.js";
+const createSongUseCase = require("../../useCases/song/createSongUseCase.js");
+const uploadSongUseCase = require("../../useCases/song/uploadSongUseCase.js");
+const response = require("../services/ResponseService.js");
 
 
 async function uploadSong(req, res) {
@@ -48,7 +48,9 @@ async function createNewSong(req, res) {
     }
 }
 
-export const songController = {
+const songController = {
     createNewSong,
     uploadSong
 }
+
+module.exports = songController

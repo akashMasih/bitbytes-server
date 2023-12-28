@@ -1,12 +1,14 @@
-import express from "express";
-import bodyParser from 'body-parser';
-import mongoose from 'mongoose';
-import dotenv from 'dotenv';
-import { Server, Socket } from 'socket.io';
-import { createServer } from 'node:http';
-import { connectDb, runServer } from './src/config/index.js';
-import loginRoutes from "./src/routes/loginRoutes.js";
-import songRoutes from "./src/routes/songRoutes.js";
+const express = require("express");
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+const Server = require('socket.io').Server;
+const Socket = require('socket.io').Socket;
+const createServer = require('node:http').createServer;
+const connectDb = require('./src/config/index.js').connectDb;
+const runServer = require('./src/config/index.js').runServer;
+const loginRoutes = require("./src/routes/loginRoutes.js");
+const songRoutes = require("./src/routes/songRoutes.js");
 
 
 
@@ -15,7 +17,7 @@ dotenv.config();
 const app = express()
 app.use(bodyParser.json());
 const server = createServer(app);
-export const io = new Server(server, {
+exports.io = new Server(server, {
     cors: {
         origin: '*',
     }
@@ -23,9 +25,9 @@ export const io = new Server(server, {
 
 
 
+// app.use('/', (req, res) => res.send("Your app is up"))
 
-
-
+// console.log(loginRoutes)
 //ROUTES
 // login Routes
 app.use('/api', loginRoutes);

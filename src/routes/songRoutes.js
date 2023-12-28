@@ -1,8 +1,8 @@
 
-import express from 'express'
-import { songController } from '../adapters/controllers/songController.js'
+const express = require('express');
+const songController = require('../adapters/controllers/songController.js');
 
-import multer from 'multer';
+const multer = require('multer');
 const storage = multer.memoryStorage(); // In-memory storage for demonstration purposes
 const upload = multer({ storage: storage });
 const songRouter = express.Router()
@@ -15,4 +15,4 @@ songRouter.post('/upload-song/:songId', upload.fields([
 
 
 
-export default songRouter
+module.exports = songRouter

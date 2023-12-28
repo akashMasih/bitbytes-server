@@ -1,6 +1,6 @@
-import { songRepository } from "../../adapters/repositories/songRepository.js";
-import { response } from "../../adapters/services/ResponseService.js"
-import s3Config from "../../config/s3Config.js";
+const songRepository = require("../../adapters/repositories/songRepository.js");
+const response = require("../../adapters/services/ResponseService.js");
+const s3Config = require("../../config/s3Config.js");
 
 
 const audioPath = 'audio/'; // Include a trailing slash to denote a folder
@@ -47,6 +47,8 @@ const uploadSong = async (audioFile, songId, res) => {
     }
 }
 
-export const uploadSongUseCase = {
+const uploadSongUseCase = {
     uploadSong
 }
+
+module.exports = uploadSongUseCase

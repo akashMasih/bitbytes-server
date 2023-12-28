@@ -1,6 +1,6 @@
 // src/routes/chatRoutes.ts
-import express from 'express';
-import { authController } from '../adapters/controllers/authController.js'
+const express = require('express');
+const authController = require('../adapters/controllers/authController')
 
 const loginRoutes = express.Router();
 
@@ -9,4 +9,4 @@ const loginRoutes = express.Router();
 loginRoutes.post('/login', authController.loginWithMobile);
 loginRoutes.post('/verify-otp', authController.verifyOTP);
 
-export default loginRoutes;
+module.exports = loginRoutes;

@@ -6,4 +6,7 @@ function error(res, message, data = {}, code = 400) {
     return res.status(code).json({ message: message, data: data })
 }
 
-export const response = { success, error }
+const response = { success, error }
+
+
+module.exports = response
