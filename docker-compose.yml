@@ -1,0 +1,8 @@
+services:
+  finnety:
+    build:
+      dockerfile: ./Dockerfile
+    ports:
+      - 4003:4003
+    image: finnety_nxtjs:${shortgitcommit}_${BUILD_NUMBER}
+    container_name: finnety_nxtjs_${shortgitcommit}_${BUILD_NUMBER}
