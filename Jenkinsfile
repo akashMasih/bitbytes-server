@@ -1,12 +1,12 @@
 def sgm () 
             {
-            def gitVars = git branch: 'master', credentialsId:'ashish_gitlab_connection', url:'https://git.vlinkinfo.com:444/finnety/finnety-backend.git'
+            def gitVars = git branch: 'main', url:'https://github.com/akashMasih/bitbytes-server.git'
             def gitcommit = "${gitVars.GIT_COMMIT}"[0..7]
             return gitcommit
             }
             
 pipeline {
- agent {node { label 'arambh-stg' } }
+ agent {node { label 'music-backend' } }
     stages{
           stage('Build Image') {
              steps {
@@ -24,7 +24,7 @@ pipeline {
                 script {
                     env.shortgitcommit = sgm ()
                     sh "docker-compose up -d"
-                    echo "Container is Started on Port 4003"
+                    echo "Container is Started on Port 4000"
                      }  
                   }
                } 
