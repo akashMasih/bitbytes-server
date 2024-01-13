@@ -35,10 +35,5 @@ app.use('/', (req, res) => res.send("Your app is up"))
 
 
 
-
-
-
-
-
 runServer(server)
 connectDb()
