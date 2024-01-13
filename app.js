@@ -33,7 +33,5 @@ app.use('/', (req, res) => res.send("Your app is up"))
 // app.use('/api', loginRoutes);
 // app.use('/api', songRoutes);
 
-
-
 runServer(server)
 connectDb()
