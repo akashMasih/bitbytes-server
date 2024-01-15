@@ -12,5 +12,5 @@ pipeline {
                 echo 'Starting to deploy docker container using Docker Compose'
                   }
                } 
-        }  
+        }
         }
