@@ -1,6 +1,5 @@
 
 pipeline {
- agent {node { label 'music-backend' } }
     stages{
           stage('Build Image') {
              steps {
