@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const PORT = 8080
+const PORT = process.env.PORT || 8080
 
 exports.connectDb = () => {
     //db config

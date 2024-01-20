@@ -1,34 +1,30 @@
-# syntax=docker/dockerfile:1
+# Install dependencies only when needed
+FROM node:20-alpine AS deps
+# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
+RUN apk add --no-cache libc6-compat
+WORKDIR /backend
 
-# Comments are provided throughout this file to help you get started.
-# If you need more help, visit the Dockerfile reference guide at
-# https://docs.docker.com/engine/reference/builder/
-
-ARG NODE_VERSION=18.17.1
-
-FROM node:${NODE_VERSION}-alpine
-
-# Use production node environment by default.
-ENV NODE_ENV production
-
-
-WORKDIR /usr/src/app
-
-# Download dependencies as a separate step to take advantage of Docker's caching.
-# Leverage a cache mount to /root/.npm to speed up subsequent builds.
-# Leverage a bind mounts to package.json and package-lock.json to avoid having to copy them into
-# into this layer.
 # Install dependencies based on the preferred package manager
-COPY package*.json ./
-# Run the application as a non-root user.
-USER node
+COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
+RUN \
+    if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
+    elif [ -f package-lock.json ]; then npm ci; \
+    elif [ -f pnpm-lock.yaml ]; then yarn global add pnpm && pnpm i; \
+    else echo "Lockfile not found." && exit 1; \
+    fi
 
-RUN npm install
-# Copy the rest of the source files into the image.
+
+# Rebuild the source code only when needed
+FROM node:20-alpine AS builder
+WORKDIR /backend
+COPY --from=deps /backend/node_modules ./node_modules
 COPY . .
 
-# Expose the port that the application listens on.
+ENV NODE_ENV production
+# Uncomment the following line in case you want to disable telemetry during runtime.
+# ENV NEXT_TELEMETRY_DISABLED 1
+
 EXPOSE 4000
 
-# Run the application.
-CMD npm start
+ENV PORT 4000
+CMD ["node", "app.js"]
