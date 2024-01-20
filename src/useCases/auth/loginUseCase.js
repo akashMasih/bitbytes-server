@@ -12,6 +12,7 @@ async function loginWithMobile(mobileNumber, fullName) {
 
     if (!user) {
         otp = generateOtp();
+        console.log("OTP", otp)
         await userRepository.create({ mobileNumber, OTP: otp, fullName });
     }
     else {
