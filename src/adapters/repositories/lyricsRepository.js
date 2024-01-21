@@ -17,11 +17,17 @@ async function getAll() {
     return await Lyrics.getAll()
 }
 
+
+async function findLyricsByParams(params) {
+    return await Lyrics.find(params)
+}
+
 const lyricsRepository = {
     create,
     update,
     getById,
-    getAll
+    getAll,
+    findLyricsByParams
 }
 
 module.exports = lyricsRepository

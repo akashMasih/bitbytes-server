@@ -10,6 +10,19 @@ async function postLyrics(req, res) {
             response.error(res, 'Validate your request');
             return
         }
+        if (!body?.slug) {
+            response.error(res, 'Slug is required');
+            return
+        }
+        if (!body?.title) {
+            response.error(res, 'Slug is required');
+            return
+        }
+        if (!body?.lyrics) {
+            response.error(res, 'Lyrics is required');
+            return
+        }
+
         await createLyricsUseCase.create(body, res)
 
 

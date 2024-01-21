@@ -9,7 +9,7 @@ const songSchema = new mongoose.Schema({
     duration: { type: Number }, // in seconds
     audioUrl: { type: String },
     videoUrl: { type: String },
-    lyrics: { type: String },
+    lyrics: { type: String, require: true },
     coverImageUrl: { type: String },
     composers: [{ type: String }],
     producers: [{ type: String }],
@@ -24,6 +24,23 @@ const songSchema = new mongoose.Schema({
     favoriteCount: { type: Number, default: 0 },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
+    metaDescription: {
+        type: String,
+    },
+    tags: [
+        {
+            type: String,
+        },
+    ],
+    canonicalUrl: {
+        type: String,
+    },
+    slug: {
+        type: String,
+        unique: true,
+        required: true,
+    },
+
 });
 
 const Lyrics = mongoose.model('Lyrics', songSchema);
