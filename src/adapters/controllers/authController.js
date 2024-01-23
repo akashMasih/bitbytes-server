@@ -1,4 +1,4 @@
-const loginUseCase = require("../../useCases/auth/LoginUseCase.js");
+const loginUseCase = require("../../useCases/auth/loginUseCase.js");
 
 async function loginWithMobile(req, res) {
     console.log(req.body)
