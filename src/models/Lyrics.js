@@ -17,7 +17,7 @@ const songSchema = new mongoose.Schema({
     bpm: { type: Number },
     key: { type: String },
     label: { type: String },
-    postedBy: { userId: mongoose.Types.ObjectId, name: String, role: Number, role_name: String },
+    postedBy: { userId: { type: mongoose.Types.ObjectId }, name: { type: String }, role: { type: Number }, role_name: { type: String } },
     status: { type: String, default: "draft" },
     statusHistory: [{ status: String, timeStamp: Date, userId: mongoose.Types.ObjectId, name: String, remarks: String }],
     readCount: { type: Number, default: 0 },

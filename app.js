@@ -8,6 +8,7 @@ const createServer = require('node:http').createServer;
 const connectDb = require('./src/config/index.js').connectDb;
 const runServer = require('./src/config/index.js').runServer;
 const initRoutes = require('./src/routes/ROUTES.js')
+const cors = require('cors')
 // const logger = require('pino-http')
 
 
@@ -16,7 +17,7 @@ const initRoutes = require('./src/routes/ROUTES.js')
 // App Initiated
 dotenv.config();
 const app = express()
-// app.use(logger())
+app.use(cors())
 app.use(bodyParser.json());
 const server = createServer(app);
 exports.io = new Server(server, {

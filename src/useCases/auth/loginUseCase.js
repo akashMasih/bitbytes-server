@@ -2,7 +2,7 @@
 const userRepository = require('../../adapters/repositories/UserRepository.js');
 const response = require('../../adapters/services/ResponseService.js');
 const sendOtp = require('../../adapters/services/TwilioService.js');
-const generateOtp = require('../../utils/index.js');
+const { generateOtp } = require('../../utils/index.js');
 const jwt = require('jwt-then');
 
 

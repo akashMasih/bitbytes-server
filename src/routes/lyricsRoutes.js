@@ -5,6 +5,8 @@ const lyricsRoutes = express.Router();
 
 
 lyricsRoutes.post('/lyrics/post', lyricsController.postLyrics)
+lyricsRoutes.post('/lyrics/getAll', lyricsController.getLyricsList)
+
 
 
 
